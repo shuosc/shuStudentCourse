@@ -16,13 +16,16 @@ migrate -source github://[你的Github用户名]:[你的Github Access Token]@shu
 - `JWT_SECRET`: jwt密钥
 - `PROXY_ADDRESS`: 访问学校选课网站代理服务地址
 - `COURSE_INFO_URL`: 课程信息服务地址
+- `COURSE_SELECTION_ADDRESS_URL`: 选课网站地址信息服务地址
 
 ### k8s
 在k8s下使用如下yaml，假设
 - `JWT_SECRET`由k8s secret给出
 - 数据库服务器在`shu-student-course-postgres-svc`
 - 代理服务地址在`shu-course-proxy-svc`
-- 课程信息地址在`shu-course-svc`
+- 课程信息地址在`shu-course-svc/course`
+- 选课网站地址信息服务地址在`shu-course-svc/course-selection-url`
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -50,6 +53,8 @@ spec:
           value: "http://shu-course-proxy-svc"
         - name: COURSE_INFO_URL
           value: "http://shu-course-svc/course"
+        - name: COURSE_SELECTION_ADDRESS_URL
+          value: "http://shu-course-svc/course-selection-url"
         - name: JWT_SECRET
           valueFrom:
             secretKeyRef:

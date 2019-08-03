@@ -23,7 +23,7 @@ func PingPongHandler(w http.ResponseWriter, _ *http.Request) {
 func fetchPage(
 	semesterId string,
 	studentId string) *goquery.Document {
-	response, _ := http.Get(os.Getenv("COURSE_SELECTION_URL") + "?id=" + semesterId);
+	response, _ := http.Get(os.Getenv("COURSE_SELECTION_URL") + "?id=" + semesterId)
 	body, _ := ioutil.ReadAll(response.Body)
 	var courseSelectionUrlJson struct {
 		Url string `json:"url"`
